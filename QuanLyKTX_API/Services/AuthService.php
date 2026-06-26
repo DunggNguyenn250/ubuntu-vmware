@@ -24,9 +24,8 @@ class AuthService {
             throw new \Exception("Tên đăng nhập không tồn tại!");
         }
 
-        // Trong hệ thống cũ, mật khẩu được lưu dạng plain text
-        // (Khuyến cáo: Nên dùng password_hash() và password_verify() cho các hệ thống mới)
-        if ($user['password'] !== $password) {
+        // Mật khẩu lưu dạng MD5 trong database
+        if ($user['password'] !== md5($password)) {
             throw new \Exception("Mật khẩu không chính xác!");
         }
 
