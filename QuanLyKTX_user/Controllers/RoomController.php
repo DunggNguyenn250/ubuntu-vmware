@@ -9,45 +9,29 @@ class RoomController extends Controller {
     private $roomModel;
 
     public function __construct() {
-        $this->ensureLoggedIn();
-        $this->roomModel = new RoomModel();
-    }
-
-    private function ensureLoggedIn() {
-        if (!$this->getSession('user_id')) {
-            $this->redirect(BASE_URL . 'auth');
-        }
-    }
-
-    public function index() {
-        // đảm bảo session đã start (nếu base Controller chưa làm)
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
-        // kiểm tra login
-    if (!$this->getSession('user_id')) {
-        $this->redirect(BASE_URL . 'auth');
-        return;
+        if (!$this->getSession('user_id')) {
+            $this->redirect(BASE_URL . 'auth');
+        }
+        $this->roomModel = new RoomModel();
     }
 
-            $roomModel = new RoomModel();
-            $rooms = $roomModel->timphong();
+    public function index() {
+        $rooms = $this->roomModel->timphong();
 
-            if (!$rooms || empty($rooms)) {
+        if (!$rooms || empty($rooms)) {
             $_SESSION['error'] = 'Không tìm thấy thông tin phòng.';
             $this->redirect(BASE_URL . 'auth/dashboard');
             return;
-    }
-
-    // Lấy phòng đầu tiên
-    $room = $rooms[0] ?? null;
-
-    $this->view('room/list', [
-        'title'   => 'Thông tin Phòng của tôi',
-        'room'    => $room
-    ]);
         }
-}
-?>
 
+        $room = $rooms[0] ?? null;
+
+        $this->view('room/list', [
+            'title' => 'Thông tin Phòng của tôi',
+            'room'  => $room
+        ]);
+    }
+}

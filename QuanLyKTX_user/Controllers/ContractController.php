@@ -48,4 +48,3 @@ class ContractController extends Controller {
 
     }
 }
-    ?>

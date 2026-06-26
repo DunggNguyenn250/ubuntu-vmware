@@ -136,4 +136,3 @@ class AuthController extends Controller {
         $this->view('auth/doimk', $data);
     }
 }
-?>
