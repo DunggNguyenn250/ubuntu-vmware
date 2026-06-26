@@ -5,7 +5,7 @@ class Controller {
     // Phương thức gọi view (trả về HTML)
     protected function view($view, $data = []) {
         extract($data);
-        $viewFile = __DIR__ . '/../Views/' . $view . '.php';
+        $viewFile = __DIR__ . '/../Views/' . strtolower($view) . '.php';
         if (file_exists($viewFile)) {
             require_once $viewFile;
         } else {
