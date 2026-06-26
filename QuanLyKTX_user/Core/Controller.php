@@ -21,7 +21,8 @@ abstract class Controller {
         
         // $controllerDir đang là .../Modules/user/Auth/Controllers
         // Vậy thư mục view sẽ là .../Modules/user/Auth/Views
-        $viewPath = $controllerDir . '/../Views/' . $view . '.php';
+        // strtolower() đảm bảo tương thích Linux (case-sensitive)
+        $viewPath = $controllerDir . '/../Views/' . strtolower($view) . '.php';
         
         if (!file_exists($viewPath)) {
             die('View file not found: ' . $viewPath);
