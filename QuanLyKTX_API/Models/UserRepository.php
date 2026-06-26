@@ -12,7 +12,7 @@ class AuthRepository {
         $stmt->execute();
         $user = $stmt->get_result()->fetch_assoc();
 
-        if ($user && $user['password'] === $password) {
+        if ($user && $user['password'] === md5($password)) {
             $sql2 = "SELECT hoten FROM sinhvien WHERE masv=?";
             $stmt2 = $this->db->prepare($sql2);
             $stmt2->bind_param('s',$masv);
@@ -30,13 +30,14 @@ class AuthRepository {
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
 
-        if (!$result || $result['password'] !== $old_pw) {
+        if (!$result || $result['password'] !== md5($old_pw)) {
             return ['status'=>'error','message'=>'Mật khẩu cũ không chính xác'];
         }
 
+        $hashed_new = md5($new_pw);
         $sql2 = "UPDATE taikhoan_user SET password=? WHERE masv=?";
         $stmt2 = $this->db->prepare($sql2);
-        $stmt2->bind_param('ss',$new_pw,$masv);
+        $stmt2->bind_param('ss',$hashed_new,$masv);
         if ($stmt2->execute()) return ['status'=>'success','message'=>'Đổi mật khẩu thành công'];
         return ['status'=>'error','message'=>'Lỗi hệ thống'];
     }
