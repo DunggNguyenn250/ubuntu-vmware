@@ -117,7 +117,7 @@
         
         <div class="footer-link">
             Bạn là Quản trị viên (Admin)? <br>
-            <a href="http://localhost/webktx/QuanLyKTX_API/">Đăng nhập tại Cổng Quản Lý</a>
+            <a href="http://192.168.190.128:8080/QuanLyKTX_API/">Đăng nhập tại Cổng Quản Lý</a>
         </div>
         
     </div>
